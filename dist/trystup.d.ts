@@ -1,4 +1,4 @@
-declare module "trystup" {
+declare module "@trystal/trystup" {
     export type optionFormatNames = 'text' | 'html'
 
     export interface Options {

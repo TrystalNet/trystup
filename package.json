@@ -1,6 +1,6 @@
 {
   "name": "@trystal/trystup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Trystup markup language for Trystal.net and associated applications",
   "homepage": "https://github.com/trystalnet/trist#readme",
   "author": "Terence O'Neill <terry.oneill@trystal.net>",
@@ -10,11 +10,11 @@
     "linelo",
     "trist"
   ],
-  "main": "trystup.js",
   "types": [
     "lodash"
   ],
-  "typings": "trystup.d.ts",
+  "main": "dist/trystup.js",
+  "typings": "dist/trystup.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/trystalnet/trist.git"
