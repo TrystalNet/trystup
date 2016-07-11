@@ -1,7 +1,7 @@
 export type optionFormatNames = 'text' | 'html'
 
 export interface Options {
-  format          : optionFormatNames
+  format?         : optionFormatNames
   showFields?     : boolean
   useStylesheets? : boolean  
 }

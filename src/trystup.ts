@@ -9,12 +9,13 @@ import {LinkToken,    isToken as isLinkToken}    from './tokens/link-token'
 
 import {renderDraftJS} from './render/render-draftjs'
 import {renderHtml}    from './render/render-html'
+import {renderText}    from './render/render-text'
 
 export {Options}
 export {Token, StrToken, FormulaToken, FormatToken, LinkToken}
 export {isFormulaToken,isFormatToken,isLinkToken}
-export {renderDraftJS,renderHtml}
 export {Format}
+export {renderDraftJS,renderHtml,renderText}
 
 export function tokenize(str:string) {
   const ROOT = new Token()
@@ -71,10 +72,9 @@ export function tokenize(str:string) {
   return ROOT
 }
 
-const defaultOptions = {
+const defaultOptions:Options = {
   showFields:false,
-  format:'html',
-  useStyleSheets:true
+  useStylesheets:true
 }
 
 
