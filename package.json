@@ -1,6 +1,6 @@
 {
   "name": "@trystal/trystup",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Trystup markup language for Trystal.net and associated applications",
   "homepage": "https://github.com/trystalnet/trist#readme",
   "author": "Terence O'Neill <terry.oneill@trystal.net>",
