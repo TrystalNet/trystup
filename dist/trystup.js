@@ -1,5 +1,5 @@
 "use strict";
-console.log('16-06-29A');
+console.log('16-07-11A');
 var Format = require('./format');
 exports.Format = Format;
 var token_1 = require('./tokens/token');
@@ -19,6 +19,8 @@ var render_draftjs_1 = require('./render/render-draftjs');
 exports.renderDraftJS = render_draftjs_1.renderDraftJS;
 var render_html_1 = require('./render/render-html');
 exports.renderHtml = render_html_1.renderHtml;
+var render_text_1 = require('./render/render-text');
+exports.renderText = render_text_1.renderText;
 function tokenize(str) {
     var ROOT = new token_1.Token();
     var STRTOKENS = [];
@@ -82,6 +84,5 @@ function tokenize(str) {
 exports.tokenize = tokenize;
 var defaultOptions = {
     showFields: false,
-    format: 'html',
-    useStyleSheets: true
+    useStylesheets: true
 };

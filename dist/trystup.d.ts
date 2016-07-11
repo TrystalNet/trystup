@@ -1,10 +1,8 @@
 declare module "@trystal/trystup" {
     import {ContentState} from 'draft-js'
     export {ContentState}
-    export type optionFormatNames = 'text' | 'html'
 
     export interface Options {
-        format: optionFormatNames;
         showFields?: boolean;
         useStylesheets? : boolean;  
     }
@@ -94,4 +92,5 @@ declare module "@trystal/trystup" {
 
   export function renderDraftJS(trystup:string):{contentState:ContentState}
   export function renderHtml(trystup:string, options:Options):{rendered:string, imageLinks:string[]}
+  export function renderText(trystup:string, options:Options):{rendered:string, imageLinks:string[]}
 }

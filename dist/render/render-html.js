@@ -8,7 +8,9 @@ var link_token_1 = require('../tokens/link-token');
 var format_1 = require('../format');
 var trystup_1 = require('../trystup');
 var spanIt = function (csstag, value, content) { return ("<span style='" + csstag + ":" + value + "'>" + content + "</span>"); };
-function renderFormatAsHtml(format, content, options) {
+function renderFormat(token, options) {
+    var format = token.format;
+    var content = token.children.map(function (child) { return render(child, options); }).join('');
     var useStylesheets = options.useStylesheets;
     switch (format) {
         case 'b': return "<strong>" + content + "</strong>";
@@ -32,22 +34,6 @@ function renderFormatAsHtml(format, content, options) {
     }
     return content;
 }
-function renderText(token, options) {
-    var str = token.str;
-    if (!str)
-        return '';
-    if (options && options.format === 'draftjs')
-        return _.escape(token.str);
-    return _.escape(token.str);
-}
-function renderFormat(token, options) {
-    var content = token.children.map(function (child) { return render(child, options); }).join('');
-    switch (options.format) {
-        case 'html': return renderFormatAsHtml(token.format, content, options);
-        case 'text': return content;
-        default: return content;
-    }
-}
 function renderFormula(token, options) {
     var showFields = options.showFields;
     var formula = token.formula;
@@ -60,11 +46,8 @@ function renderFormula(token, options) {
     }
 }
 function renderLink(token, options) {
-    var format = options.format;
     var link = token.link, linkType = token.linkType, children = token.children;
     var content = children.map(function (token) { return render(token, options); }).join('');
-    if (format === 'text')
-        return "[" + content + "](" + link + ")";
     switch (linkType) {
         case link_token_1.LinkTypes.Internal:
         case link_token_1.LinkTypes.Trystal: return "<a href='" + link + "'>" + content + "</a>";
@@ -81,16 +64,16 @@ function render(token, options) {
     if (token instanceof format_token_1.FormatToken)
         return renderFormat(token, options);
     if (token instanceof str_token_1.StrToken)
-        return renderText(token, options);
+        return _.escape(token.str);
     return '';
 }
 var fixOptions = function (_a) {
-    var _b = _a.showFields, showFields = _b === void 0 ? false : _b, _c = _a.format, format = _c === void 0 ? 'html' : _c, _d = _a.useStyleSheets, useStyleSheets = _d === void 0 ? true : _d;
-    return ({ showFields: showFields, format: format, useStyleSheets: useStyleSheets });
+    var _b = _a.showFields, showFields = _b === void 0 ? false : _b, _c = _a.useStylesheets, useStylesheets = _c === void 0 ? true : _c;
+    return ({ showFields: showFields, useStylesheets: useStylesheets });
 };
 function renderHtml(trystup, options) {
-    var root = trystup_1.tokenize(trystup);
     options = fixOptions(options);
+    var root = trystup_1.tokenize(trystup);
     var rendered = root.children.reduce(function (ACC, token) { return ACC + render(token, options); }, '');
     var imageLinks = root.images();
     return { rendered: rendered, imageLinks: imageLinks };
