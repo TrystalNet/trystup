@@ -1,4 +1,6 @@
 declare module "@trystal/trystup" {
+    import {ContentState} from 'draft-js'
+    export {ContentState}
     export type optionFormatNames = 'text' | 'html'
 
     export interface Options {
@@ -89,4 +91,7 @@ declare module "@trystal/trystup" {
     export const unsetUnderline: (format: string) => string;
     export const combos: {};
   }
+
+  export function renderDraftJS(trystup:string):{contentState:ContentState}
+  export function renderHtml(trystup:string, options:Options):{rendered:string, imageLinks:string[]}
 }

@@ -97,7 +97,7 @@ function renderToken(token:Token, entityArray:JSEntity[]) {
   return renderChildren(token.children, entityArray)
 }
 
-export function renderDraftJS(trystup:string) {
+export function renderDraftJS(trystup:string) : { contentState:ContentState } {
   const rootTokens = tokenize(trystup).children
   const entities = <JSEntity[]>[]
   const block = renderChildren(rootTokens, entities)
@@ -116,4 +116,5 @@ export function renderDraftJS(trystup:string) {
   // const imageLinks = root.images()
   return { contentState /*, imageLinks*/ }
 }
+
 

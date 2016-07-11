@@ -82,7 +82,7 @@ function render(token:Token, options:Options) : string {
 
 const fixOptions = ({showFields=false,format=<optionFormatNames>'html', useStyleSheets=true})  => ({showFields, format, useStyleSheets})
 
-export function renderHtml(trystup:string, options:Options) {
+export function renderHtml(trystup:string, options:Options):{rendered:string, imageLinks:string[]} {
   const root = tokenize(trystup)
   options = fixOptions(options)
   const rendered =  root.children.reduce((ACC, token) =>  ACC + render(token, options), '')
