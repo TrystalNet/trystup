@@ -1,10 +1,7 @@
 "use strict";
+var constants_1 = require('@trystal/constants');
 var BISU = 0, FG = 1, BG = 2, FAMILY = 3, SIZE = 4, MGNBTM = 5;
 exports.powerUp = function (n) { return n ? Math.pow(2, n - 1) : 0; };
-exports.fgs = ['black', null, 'blue', 'green', 'red', 'gray'];
-exports.bgs = [null, 'yellow', 'powderblue', 'palegreen', 'mistyrose', 'lightgray'];
-exports.sizes = [null, 10, 13, 18, 24, 32];
-exports.faces = ['serif', 'sans-serif', 'monospace'];
 exports.toBits = function (format) {
     var _a = format.split('-'), _b = _a[0], bisu = _b === void 0 ? '' : _b, _c = _a[1], fg = _c === void 0 ? '' : _c, _d = _a[2], bg = _d === void 0 ? '' : _d, _e = _a[3], family = _e === void 0 ? '' : _e, _f = _a[4], size = _f === void 0 ? '' : _f, _g = _a[5], mgnbtm = _g === void 0 ? '0' : _g;
     return [bisu, fg, bg, family, size, mgnbtm];
@@ -58,7 +55,9 @@ exports.combos = (function () {
     [0, 1, 2, 3, 4, 5].forEach(function (bg, bgi) {
         [0, 2, 3, 4, 5].forEach(function (fg, fgi) {
             var c = '123456789abcdefghijklmnopqrstu'.charAt(bgi * 5 + fgi);
-            combos[c] = { bg: exports.bgs[bg], fg: exports.fgs[fg] };
+            combos[c] = {
+                bg: constants_1.BackgroundColors[bg],
+                fg: constants_1.ForegroundColors[fg] };
         });
     });
     return combos;

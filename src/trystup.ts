@@ -21,30 +21,31 @@ export function tokenize(str:string) {
   const ROOT = new Token()
   const STRTOKENS = <any[]>[] // keep a list of these so we can easily post process the content at the end
   const posMax = str.length
-  let pos = 0, TOKEN = ROOT
+  let pos = 0
+  let TOKEN = ROOT
   while (pos < posMax) {
     const oldpos = pos
     if (str[pos] === ']') {
-      if (TOKEN instanceof StrToken) TOKEN = TOKEN.parent
+      if (TOKEN instanceof StrToken) TOKEN = <Token>TOKEN.parent
       if (TOKEN.parent) TOKEN = TOKEN.parent
       pos++
     }
     else if (isFormatToken(str, pos)) {
-      if (TOKEN instanceof StrToken) TOKEN = TOKEN.parent
+      if (TOKEN instanceof StrToken) TOKEN = <Token>TOKEN.parent
       const FORMAT = new FormatToken(TOKEN, str, pos + 2)
       TOKEN.children.push(FORMAT)
       TOKEN = FORMAT
       pos += (FORMAT.format.length + 3)
     }
     else if (isLinkToken(pos, str)) {
-      if (TOKEN instanceof StrToken) TOKEN = TOKEN.parent
+      if (TOKEN instanceof StrToken) TOKEN = <Token>TOKEN.parent
       let LINK = new LinkToken(TOKEN, str, pos)
       TOKEN.children.push(LINK)
       TOKEN = LINK
-      pos += LINK.link.length + 5
+      pos += LINK.link!.length + 5
     }
     else if (isFormulaToken(str, pos)) {
-      if (TOKEN instanceof StrToken) TOKEN = TOKEN.parent
+      if (TOKEN instanceof StrToken) TOKEN = <Token>TOKEN.parent
       let FORMULA = new FormulaToken(TOKEN, str, pos)
       TOKEN.children.push(FORMULA)
       pos += FORMULA.formula.length + 4  // #[=TODAY]

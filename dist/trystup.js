@@ -25,7 +25,8 @@ function tokenize(str) {
     var ROOT = new token_1.Token();
     var STRTOKENS = [];
     var posMax = str.length;
-    var pos = 0, TOKEN = ROOT;
+    var pos = 0;
+    var TOKEN = ROOT;
     while (pos < posMax) {
         var oldpos = pos;
         if (str[pos] === ']') {

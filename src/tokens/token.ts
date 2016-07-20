@@ -1,11 +1,11 @@
 import {Options} from '../interfaces'
 
 export class Token {
-  parent:Token
+  parent:Token | null
   children:Token[]
   endPos:number
 
-  constructor(parent:Token = null) {
+  constructor(parent:Token|null = null) {
     this.parent = parent
     this.children = []
   }

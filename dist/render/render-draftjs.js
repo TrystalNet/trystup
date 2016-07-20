@@ -13,7 +13,14 @@ var CODES = {
     f0: 'F0', f1: 'F1', f2: 'F2',
     s1: 'S1', s2: 'S2', s3: 'S3', s4: 'S4', s5: 'S5'
 };
-var initBlockFromText = function (text) { return ({ text: text, type: 'unstyled', inlineStyleRanges: [], entityRanges: [] }); };
+var initBlockFromText = function (text) {
+    return {
+        text: text,
+        type: 'unstyled',
+        inlineStyleRanges: [],
+        entityRanges: []
+    };
+};
 function reduceBlocks(block1, block2) {
     var oldTextLength = block1.text.length;
     block1.text += block2.text;
@@ -25,7 +32,7 @@ function reduceBlocks(block1, block2) {
 }
 function appendEntity(entities, entitySpec) {
     entities.push(entitySpec);
-    return (entities.length - 1).toString();
+    return (entities.length - 1);
 }
 function renderFormula(token, entities) {
     var formula = token.formula;
@@ -38,7 +45,8 @@ function renderFormula(token, entities) {
     var key = appendEntity(entities, entitySpec);
     var offset = 0;
     var length = block.text.length;
-    block.entityRanges.push({ offset: offset, length: length, key: key });
+    var entityRange = { key: key, offset: offset, length: length };
+    block.entityRanges.push(entityRange);
     return block;
 }
 function renderFormat(token, entityArray) {
@@ -48,7 +56,7 @@ function renderFormat(token, entityArray) {
     return block;
 }
 function renderText(token) {
-    return initBlockFromText(token.str);
+    return initBlockFromText(token.str || '');
 }
 function renderLink(token, entityArray) {
     var link = token.link, children = token.children;
@@ -91,8 +99,8 @@ function renderDraftJS(trystup) {
         return accum;
     }, {});
     var rawState = {
-        entityMap: entityMap,
-        blocks: [block]
+        blocks: [block],
+        entityMap: entityMap
     };
     var contentState = draft_js_1.convertFromRaw(rawState);
     return { contentState: contentState };

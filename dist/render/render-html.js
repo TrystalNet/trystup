@@ -1,6 +1,7 @@
 "use strict";
 var Moment = require('moment');
 var _ = require('lodash');
+var constants_1 = require('@trystal/constants');
 var formula_token_1 = require('../tokens/formula-token');
 var str_token_1 = require('../tokens/str-token');
 var format_token_1 = require('../tokens/format-token');
@@ -21,13 +22,13 @@ function renderFormat(token, options) {
     if (useStylesheets)
         return "<span class='" + format + "'>" + content + "</span>";
     if (/^s[1-5]$/i.test(format))
-        return spanIt('font-size', format_1.sizes[format[1]] + 'px', content);
+        return spanIt('font-size', constants_1.SIZES[format[1]] + 'px', content);
     if (/^f[0-2]$/i.test(format))
-        return spanIt('font-family', format_1.faces[format[1]], content);
+        return spanIt('font-family', constants_1.FACES[format[1]], content);
     if (/^bg[0-5]$/i.test(format))
-        return spanIt('background-color', format_1.bgs[format[2]], content);
+        return spanIt('background-color', constants_1.BackgroundColors[format[2]], content);
     if (/^fg[02345]$/i.test(format))
-        return spanIt('color', format_1.fgs[format[2]], content);
+        return spanIt('color', constants_1.ForegroundColors[format[2]], content);
     if (/^c[0-9a-z]$/i.test(format)) {
         var _a = format_1.combos[format[1]], fg = _a.fg, bg = _a.bg;
         return "<span style='background-color:" + bg + ",color:" + fg + "'>" + content + "</span>";
@@ -64,7 +65,7 @@ function render(token, options) {
     if (token instanceof format_token_1.FormatToken)
         return renderFormat(token, options);
     if (token instanceof str_token_1.StrToken)
-        return _.escape(token.str);
+        return _.escape(token.str || '');
     return '';
 }
 var fixOptions = function (_a) {

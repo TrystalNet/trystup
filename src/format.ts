@@ -1,10 +1,10 @@
+import {BackgroundColors, ForegroundColors} from '@trystal/constants'
+
+export type BIUS = 'b' | 'i' | 'u' | 's' 
+
 const BISU = 0, FG=1, BG=2, FAMILY=3, SIZE=4, MGNBTM=5
 
 export const powerUp = (n:number) => n ? Math.pow(2, n-1) : 0
-export const fgs = ['black', null, 'blue', 'green', 'red', 'gray']
-export const bgs = [null, 'yellow', 'powderblue', 'palegreen', 'mistyrose', 'lightgray']
-export const sizes = [null, 10, 13, 18, 24, 32]
-export const faces = ['serif', 'sans-serif', 'monospace']
 
 export const toBits = (format:string) => {
   let [bisu='',fg='',bg='',family='',size='',mgnbtm='0'] = format.split('-')
@@ -15,7 +15,7 @@ export const toFormat = (bits:string[]) => bits.join('-')
 const getBit = (format:string, n:number) => toBits(format)[n]
 const getInt = (format:string, n:number) => parseInt(getBit(format, n)) 
 
-export const bisu         = (format:string) => getBit(format, BISU)
+export const bisu         = (format:string) => <BIUS>getBit(format, BISU)
 export const fg           = (format:string) => getInt(format, FG)
 export const bg           = (format:string) => getInt(format, BG)
 export const family       = (format:string) => getInt(format, FAMILY)
@@ -42,7 +42,7 @@ export const setMarginBottom = (format:string, value:string) => set(format, MGNB
 
 const _unsetBISU = (bit0:string, fmt:string) => bit0.replace(fmt,'')
 const _setBISU   = (bit0:string, fmt:string) => bit0.indexOf(fmt) >= 0 ? bit0 : bit0 + fmt
-const setBISU    = (format:string, fmt:string) => { 
+const setBISU    = (format:string, fmt:'B'|'I'|'S'|'U') => { 
   const bits = toBits(format)
   bits[0] = _setBISU(toBits(format)[0], fmt) //   _.set(X, 0, Y)
   return toFormat(bits) 
@@ -63,13 +63,15 @@ export const unsetItalic     = (format:string) => unsetBISU(format, 'I')
 export const unsetStrikeout  = (format:string) => unsetBISU(format, 'S') 
 export const unsetUnderline  = (format:string) => unsetBISU(format, 'U') 
 
-
 export const combos = (() => {
   const combos = {}
+
   ;[0, 1, 2, 3, 4, 5].forEach((bg, bgi) => {
     [0, 2, 3, 4, 5].forEach((fg, fgi) => {
       const c = '123456789abcdefghijklmnopqrstu'.charAt(bgi * 5 + fgi)
-      combos[c] = { bg: bgs[bg], fg: fgs[fg] }
+      combos[c] = { 
+        bg: BackgroundColors[bg], 
+        fg: ForegroundColors[fg] }
     })
   })
   return combos

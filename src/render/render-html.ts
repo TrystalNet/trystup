@@ -1,12 +1,18 @@
 import * as Moment                  from 'moment'
 import * as _                       from 'lodash'
+
+import {
+  BackgroundColors, ForegroundColors,
+  SIZES, FACES
+} from '@trystal/constants'
+
 import {Options}                    from '../interfaces'
 import {Token}                      from '../tokens/token'
 import {FormulaToken}               from '../tokens/formula-token'
 import {StrToken}                   from '../tokens/str-token'
 import {FormatToken}                from '../tokens/format-token'
 import {LinkToken, LinkTypes}       from '../tokens/link-token'
-import {sizes,faces,bgs,fgs,combos} from '../format'
+import {combos}                     from '../format'
 import {tokenize}                   from '../trystup'
 
 const spanIt = (csstag:string, value:string, content:string) => `<span style='${csstag}:${value}'>${content}</span>`
@@ -22,10 +28,10 @@ function renderFormat(token:FormatToken, options:Options) {
     case 'u': return `<ins>${content}</ins>`
   }
   if (useStylesheets) return `<span class='${format}'>${content}</span>`
-  if (/^s[1-5]$/i.test(format)) return spanIt('font-size', sizes[format[1]] + 'px', content)
-  if (/^f[0-2]$/i.test(format)) return spanIt('font-family', faces[format[1]], content)
-  if (/^bg[0-5]$/i.test(format)) return spanIt('background-color', bgs[format[2]], content)
-  if (/^fg[02345]$/i.test(format)) return spanIt('color', fgs[format[2]], content)
+  if (/^s[1-5]$/i.test(format)) return spanIt('font-size', SIZES[format[1]] + 'px', content)
+  if (/^f[0-2]$/i.test(format)) return spanIt('font-family', FACES[format[1]], content)
+  if (/^bg[0-5]$/i.test(format)) return spanIt('background-color', BackgroundColors[format[2]], content)
+  if (/^fg[02345]$/i.test(format)) return spanIt('color', ForegroundColors[format[2]], content)
   if (/^c[0-9a-z]$/i.test(format)) {
     const {fg, bg} = combos[format[1]]
     return `<span style='background-color:${bg},color:${fg}'>${content}</span>`
@@ -60,11 +66,11 @@ function render(token:Token, options:Options) : string {
   if(token instanceof FormulaToken) return renderFormula(token, options)
   if(token instanceof LinkToken)    return renderLink(token, options)
   if(token instanceof FormatToken)  return renderFormat(token, options)
-  if(token instanceof StrToken)     return _.escape(token.str)
+  if(token instanceof StrToken)     return _.escape(token.str || '')
   return ''
 }
 
-const fixOptions = ({showFields=false, useStylesheets=true}):Options  => ({showFields, useStylesheets})
+const fixOptions = ({showFields=false, useStylesheets=true}:Options):Options  => ({showFields, useStylesheets})
 
 export function renderHtml(trystup:string, options:Options):{rendered:string, imageLinks:string[]} {
   options = fixOptions(options)

@@ -18,8 +18,8 @@ export const isToken = (p:number, s:string) => _.startsWith(s, '#[(', p) && s.in
 
 export class LinkToken extends Token {
   
-  link     : string
-  linkType : LinkTypes
+  link     : string | null
+  linkType : LinkTypes | null
   
   constructor(parent:Token, str:string, offset:number) {
     super(parent)
@@ -37,7 +37,7 @@ export class LinkToken extends Token {
 
   images() {
     let images = <string[]>[]
-    if (this.linkType === LinkTypes.Image) images.push(this.link)
+    if (this.linkType === LinkTypes.Image && this.link) images.push(this.link)
     this.children.forEach(token => images.push(...token.images()))
     return images
   }

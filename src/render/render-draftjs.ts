@@ -1,5 +1,8 @@
 import * as _ from 'lodash'
-import {Entity, ContentState, convertFromRaw/*, EditorState */} from 'draft-js'
+import {
+  RawDraftContentBlock, EntityRange,
+  Entity, ContentState, convertFromRaw/*, EditorState */
+} from 'draft-js'
 
 import {Token} from '../tokens/token'
 import {RGXLINK, LinkTypes, LinkToken, isToken as LINKTEST} from '../tokens/link-token'
@@ -14,12 +17,13 @@ interface JSEntity {
   data: any
 }
 
-interface JSBlock {
-  text:string 
-  type: 'unstyled' | 'whatever' 
-  inlineStyleRanges: any[]
-  entityRanges: any[]
-}
+// interface JSBlock {
+//   key?:string
+//   text:string 
+//   type: 'unstyled' | 'whatever' 
+//   inlineStyleRanges: any[]
+//   entityRanges: any[]
+// }
 
 const CODES = {
   b: 'BOLD', i: 'ITALIC', u: 'UNDERLINE', s: 'STRIKEOUT',
@@ -29,9 +33,16 @@ const CODES = {
   s1: 'S1', s2: 'S2', s3: 'S3', s4: 'S4', s5: 'S5'
 }
 
-const initBlockFromText = (text:string):JSBlock => ({ text, type: 'unstyled', inlineStyleRanges: <any[]>[], entityRanges: <any[]>[] })
+const initBlockFromText = (text:string):RawDraftContentBlock => { 
+  return { 
+    text, 
+    type: 'unstyled', 
+    inlineStyleRanges: <any[]>[], 
+    entityRanges: <any[]>[] 
+  }
+}
 
-function reduceBlocks(block1:JSBlock, block2:JSBlock):JSBlock {
+function reduceBlocks(block1:RawDraftContentBlock, block2:RawDraftContentBlock):RawDraftContentBlock {
   const oldTextLength = block1.text.length
   block1.text += block2.text
   block2.inlineStyleRanges.forEach((isr:any) => isr.offset += oldTextLength)
@@ -41,9 +52,9 @@ function reduceBlocks(block1:JSBlock, block2:JSBlock):JSBlock {
   return block1
 }
 
-function appendEntity(entities:JSEntity[], entitySpec:JSEntity) {
+function appendEntity(entities:JSEntity[], entitySpec:JSEntity):number {
   entities.push(entitySpec)
-  return (entities.length - 1).toString()
+  return (entities.length - 1)
 }
 function renderFormula(token:FormulaToken, entities:JSEntity[]) {
   const {formula} = token
@@ -58,7 +69,8 @@ function renderFormula(token:FormulaToken, entities:JSEntity[]) {
   const key = appendEntity(entities, entitySpec)
   const offset = 0
   const length = block.text.length
-  block.entityRanges.push({ offset, length, key })   // <==== what are we doing here
+  const entityRange:EntityRange = { key, offset, length }
+  block.entityRanges.push(entityRange)   // <==== what are we doing here
   return block
 }
 function renderFormat(token: FormatToken, entityArray:JSEntity[]) {
@@ -68,7 +80,7 @@ function renderFormat(token: FormatToken, entityArray:JSEntity[]) {
   return block
 }
 function renderText(token:TextToken) {
-  return initBlockFromText(token.str)
+  return initBlockFromText(token.str || '')
 }
 function renderLink(token:LinkToken, entityArray:any[]) {
   const {link, children} = token
@@ -83,7 +95,7 @@ function renderLink(token:LinkToken, entityArray:any[]) {
   block.entityRanges.push({ offset, length, key })   // <==== what are we doing here
   return block
 }
-function renderChildren(childTokens:Token[], entities:JSEntity[]) : JSBlock {
+function renderChildren(childTokens:Token[], entities:JSEntity[]) : RawDraftContentBlock {
   if (_.isEmpty(childTokens)) return initBlockFromText('')
   return childTokens
     .map(token => renderToken(token, entities))
@@ -106,9 +118,13 @@ export function renderDraftJS(trystup:string) : { contentState:ContentState } {
     accum[key] = entity
     return accum
   }, {})
+
+  // the block doesn't have a 'key' property
+  // what is the key supposed to be?
+
   const rawState = {
-    entityMap,
-    blocks: [block]
+    blocks: [block],
+    entityMap
   }
   // const contentBlocks = convertFromRaw(rawState)  // merges the entities and raw blocks into contentBlocks
   // const contentState = ContentState.createFromBlockArray(contentBlocks)

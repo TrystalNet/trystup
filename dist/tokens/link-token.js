@@ -38,7 +38,7 @@ var LinkToken = (function (_super) {
     }
     LinkToken.prototype.images = function () {
         var images = [];
-        if (this.linkType === LinkTypes.Image)
+        if (this.linkType === LinkTypes.Image && this.link)
             images.push(this.link);
         this.children.forEach(function (token) { return images.push.apply(images, token.images()); });
         return images;

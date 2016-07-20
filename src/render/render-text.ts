@@ -29,11 +29,11 @@ function render(token:Token, options:Options) : string {
   if(token instanceof FormulaToken) return renderFormula(token, options)
   if(token instanceof LinkToken)    return renderLink(token, options)
   if(token instanceof FormatToken)  return token.children.map(child => render(child, options)).join('') 
-  if(token instanceof StrToken)     return  _.escape(token.str || '')
+  if(token instanceof StrToken)     return _.escape(token.str || '')
   return ''
 }
 
-const fixOptions = ({showFields=false})  => ({showFields})
+const fixOptions = ({showFields=false}:Options)  => ({showFields})
 
 export function renderText(trystup:string, options:Options):{rendered:string, imageLinks:string[]} {
   const root = tokenize(trystup)
