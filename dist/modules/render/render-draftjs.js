@@ -5,7 +5,7 @@ const link_token_1 = require('../tokens/link-token');
 const formula_token_1 = require('../tokens/formula-token');
 const format_token_1 = require('../tokens/format-token');
 const str_token_1 = require('../tokens/str-token');
-const trystup_1 = require('../../trystup');
+const trystup_1 = require('../trystup');
 const CODES = {
     b: 'BOLD', i: 'ITALIC', u: 'UNDERLINE', s: 'STRIKEOUT',
     bg0: 'BG0', bg1: 'BG1', bg2: 'BG2', bg3: 'BG3', bg4: 'BG4', bg5: 'BG5',

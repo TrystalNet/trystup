@@ -5,7 +5,7 @@ const formula_token_1 = require('../tokens/formula-token');
 const str_token_1 = require('../tokens/str-token');
 const format_token_1 = require('../tokens/format-token');
 const link_token_1 = require('../tokens/link-token');
-const trystup_1 = require('../../trystup');
+const trystup_1 = require('../trystup');
 function renderFormula(token, options) {
     let { showFields } = options;
     let { formula } = token;

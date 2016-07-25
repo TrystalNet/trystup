@@ -1,5 +1,5 @@
+/// <reference path="../../typings/draftjs.d.ts" />
 import * as _ from 'lodash'
-
 import {
   RawDraftContentBlock, EntityRange,
   Entity, ContentState, convertFromRaw/*, EditorState */
@@ -10,7 +10,7 @@ import {RGXLINK, LinkTypes, LinkToken, isToken as LINKTEST} from '../tokens/link
 import {FormulaToken, isToken as FORMULATEST} from '../tokens/formula-token'
 import {FormatToken, isToken as FORMATTEST} from '../tokens/format-token'
 import {StrToken as TextToken} from '../tokens/str-token'
-import {tokenize} from '../../trystup'
+import {tokenize} from '../trystup'
 
 interface JSEntity {
   type: 'LINK' | 'FIELD'

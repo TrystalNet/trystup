@@ -1,4 +1,5 @@
 declare module "draft-js" {
+  export type KETCHUP = 'ABC' | 'DEF'
   export type DraftBlockType = 'unstyled' |
     'paragraph' |
     'header-one' |

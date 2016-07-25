@@ -7,7 +7,7 @@ const str_token_1 = require('../tokens/str-token');
 const format_token_1 = require('../tokens/format-token');
 const link_token_1 = require('../tokens/link-token');
 const format_1 = require('../format');
-const trystup_1 = require('../../trystup');
+const trystup_1 = require('../trystup');
 const spanIt = (csstag, value, content) => `<span style='${csstag}:${value}'>${content}</span>`;
 function renderFormat(token, options) {
     const { format } = token;

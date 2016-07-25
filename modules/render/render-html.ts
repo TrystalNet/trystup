@@ -13,7 +13,7 @@ import {StrToken}                   from '../tokens/str-token'
 import {FormatToken}                from '../tokens/format-token'
 import {LinkToken, LinkTypes}       from '../tokens/link-token'
 import {combos}                     from '../format'
-import {tokenize}                   from '../../trystup'
+import {tokenize}                   from '../trystup'
 
 const spanIt = (csstag:string, value:string, content:string) => `<span style='${csstag}:${value}'>${content}</span>`
 

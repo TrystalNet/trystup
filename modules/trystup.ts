@@ -1,15 +1,17 @@
 console.log('16-07-11A')
-import * as Format    from './modules/format'
-import {Options}      from './modules/interfaces'
-import {Token}        from './modules/tokens/token'
-import {StrToken}     from './modules/tokens/str-token'
-import {FormulaToken, isToken as isFormulaToken} from './modules/tokens/formula-token'
-import {FormatToken,  isToken as isFormatToken}  from './modules/tokens/format-token'
-import {LinkToken,    isToken as isLinkToken}    from './modules/tokens/link-token'
+import * as Format    from './format'
+import {Options}      from './interfaces'
+import {Token}        from './tokens/token'
+import {StrToken}     from './tokens/str-token'
+import {FormulaToken, isToken as isFormulaToken} from './tokens/formula-token'
+import {FormatToken,  isToken as isFormatToken}  from './tokens/format-token'
+import {LinkToken,    isToken as isLinkToken}    from './tokens/link-token'
 
-import {renderDraftJS} from './modules/render/render-draftjs'
-import {renderHtml}    from './modules/render/render-html'
-import {renderText}    from './modules/render/render-text'
+import {renderDraftJS} from './render/render-draftjs'
+import {renderHtml}    from './render/render-html'
+import {renderText}    from './render/render-text'
+
+export const ALOHA = 'HOLA' 
 
 export {Options}
 export {Token, StrToken, FormulaToken, FormatToken, LinkToken}

@@ -6,7 +6,7 @@ import {FormulaToken}               from '../tokens/formula-token'
 import {StrToken}                   from '../tokens/str-token'
 import {FormatToken}                from '../tokens/format-token'
 import {LinkToken}                  from '../tokens/link-token'
-import {tokenize}                   from '../../trystup'
+import {tokenize}                   from '../trystup'
 
 function renderFormula(token:FormulaToken, options:Options) {
   let {showFields} = options
