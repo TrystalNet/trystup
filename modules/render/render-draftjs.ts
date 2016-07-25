@@ -1,4 +1,5 @@
-/// <reference path="../../typings/draftjs.d.ts" />
+/// <reference path="../../node_modules/@trystal/interfaces/3rdparty/draft-js.d.ts" />
+
 import * as _ from 'lodash'
 import {
   RawDraftContentBlock, EntityRange,
