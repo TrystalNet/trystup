@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+
 import {
   RawDraftContentBlock, EntityRange,
   Entity, ContentState, convertFromRaw/*, EditorState */
@@ -9,7 +10,7 @@ import {RGXLINK, LinkTypes, LinkToken, isToken as LINKTEST} from '../tokens/link
 import {FormulaToken, isToken as FORMULATEST} from '../tokens/formula-token'
 import {FormatToken, isToken as FORMATTEST} from '../tokens/format-token'
 import {StrToken as TextToken} from '../tokens/str-token'
-import {tokenize} from '../trystup'
+import {tokenize} from '../../trystup'
 
 interface JSEntity {
   type: 'LINK' | 'FIELD'
@@ -45,10 +46,10 @@ const initBlockFromText = (text:string):RawDraftContentBlock => {
 function reduceBlocks(block1:RawDraftContentBlock, block2:RawDraftContentBlock):RawDraftContentBlock {
   const oldTextLength = block1.text.length
   block1.text += block2.text
-  block2.inlineStyleRanges.forEach((isr:any) => isr.offset += oldTextLength)
-  block2.entityRanges.forEach((er:any) => er.offset += oldTextLength)
-  block1.inlineStyleRanges = [...block1.inlineStyleRanges, ...block2.inlineStyleRanges]
-  block1.entityRanges = [...block1.entityRanges, ...block2.entityRanges]
+  block2.inlineStyleRanges!.forEach((isr:any) => isr.offset += oldTextLength)
+  block2.entityRanges!.forEach((er:any) => er.offset += oldTextLength)
+  block1.inlineStyleRanges = [...block1.inlineStyleRanges!, ...block2.inlineStyleRanges!]
+  block1.entityRanges = [...block1.entityRanges!, ...block2.entityRanges!]
   return block1
 }
 
@@ -70,13 +71,13 @@ function renderFormula(token:FormulaToken, entities:JSEntity[]) {
   const offset = 0
   const length = block.text.length
   const entityRange:EntityRange = { key, offset, length }
-  block.entityRanges.push(entityRange)   // <==== what are we doing here
+  block.entityRanges!.push(entityRange)   // <==== what are we doing here
   return block
 }
 function renderFormat(token: FormatToken, entityArray:JSEntity[]) {
   const block = renderChildren(token.children, entityArray)
   const code = CODES[token.format]
-  block.inlineStyleRanges.push({ offset: 0, length: block.text.length, style: code })
+  block.inlineStyleRanges!.push({ offset: 0, length: block.text.length, style: code })
   return block
 }
 function renderText(token:TextToken) {
@@ -92,7 +93,7 @@ function renderLink(token:LinkToken, entityArray:any[]) {
   })
   const offset = 0
   const length = block.text.length
-  block.entityRanges.push({ offset, length, key })   // <==== what are we doing here
+  block.entityRanges!.push({ offset, length, key })   // <==== what are we doing here
   return block
 }
 function renderChildren(childTokens:Token[], entities:JSEntity[]) : RawDraftContentBlock {
@@ -129,6 +130,7 @@ export function renderDraftJS(trystup:string) : { contentState:ContentState } {
   // const contentBlocks = convertFromRaw(rawState)  // merges the entities and raw blocks into contentBlocks
   // const contentState = ContentState.createFromBlockArray(contentBlocks)
   const contentState : ContentState = convertFromRaw(rawState)  // merges the entities and raw blocks into contentBlocks
+
   // const imageLinks = root.images()
   return { contentState /*, imageLinks*/ }
 }

@@ -1,18 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "removeComments": true,
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
     "strictNullChecks": true, // recursion doesn't seem to work with this turned o, so leave it off
     "declaration": false,
-    "outDir": "../dist"
+    "outDir": "dist"
   }  ,
   "files": [
+    "./typings/draftjs.d.ts",
     "./trystup.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }
