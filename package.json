@@ -1,6 +1,6 @@
 {
   "name": "@trystal/trystup",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Trystup markup language for Trystal.net and associated applications",
   "homepage": "https://github.com/trystalnet/trist#readme",
   "author": "Terence O'Neill <terry.oneill@trystal.net>",
@@ -14,7 +14,6 @@
     "lodash"
   ],
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/trystalnet/trystup.git"
@@ -40,8 +39,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@trystal/constants": "^1.4.7",
-    "@types/jasmine": "^2.2.30",
+    "@trystal/constants": "^1.4.8",
     "@types/lodash": "0.0.28",
     "@types/react": "^0.14.27",
     "draft-js": "^0.7.0",

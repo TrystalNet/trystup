@@ -10,7 +10,8 @@
     "outDir": "dist"
   }  ,
   "files": [
-    "./index.ts"
+    "./index.ts",
+    "./modules/trystup.ts"
   ],
   "exclude": [
     "node_modules",
